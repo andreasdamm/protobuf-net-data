@@ -39,7 +39,9 @@ namespace ProtoBuf.Data.Internal
                     var row = schema.Rows[i];
 
                     // Skip computed columns unless requested.
-                    var isComputedColumn = schemaSupportsExpressions && !(row["Expression"] is DBNull);
+	                var expression = row["Expression"];
+	                var isComputedColumn = schemaSupportsExpressions && 
+						!(expression is DBNull || expression is string && (string) expression == string.Empty);
                     if (isComputedColumn && !options.IncludeComputedColumns)
                         continue;
 
